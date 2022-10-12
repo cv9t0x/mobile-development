@@ -1,6 +1,6 @@
+val gameSettings = Settings(3)
+
 fun main() {
-    val game = Game()
-    game.makeMove(1, 1)
-    game.makeMove(1, 1)
-    game.printAllFields()
+    val game = Game(gameSettings)
+    game.start()
 }

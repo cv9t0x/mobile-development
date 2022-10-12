@@ -1,29 +1,37 @@
-class Settings(val sizeOfField: Int = 3) {}
+import java.lang.Exception
+import java.util.Scanner
+class Settings(var sizeOfField: Int = 3)
+class GameException(message: String) : Exception(message)
+
+val defaultSettings = Settings(3)
+
+enum class Command {
+    PRINT_ALL_FIELDS, PRINT_CURRENT_FIELD, MAKE_MOVE
+}
+
+val commands = mapOf("print all map" to Command.PRINT_ALL_FIELDS, "print current field" to Command.PRINT_CURRENT_FIELD, "make move" to Command.MAKE_MOVE)
 
 class Game {
-    private var currentPlayer: Value = Value.X
+    private var currentPlayer = Value.X
+    private var gameOver = false
 
     private var sizeOfField: Int
     private var fields: Array<Array<Field>>
     private var currentField: Field
 
-
-    constructor(settings: Settings = Settings()) {
+    constructor(settings: Settings = defaultSettings) {
         this.sizeOfField = settings.sizeOfField
         this.fields =
-            Array<Array<Field>>(this.sizeOfField) { Array(this.sizeOfField) { Field(this.sizeOfField) } }
+            Array<Array<Field>>(this.sizeOfField) { y -> Array(this.sizeOfField) { x -> Field(x, y, this.sizeOfField) } }
         this.currentField = this.fields[0][0]
     }
 
-    fun getCurrentPlayer(): Value {
-        return this.currentPlayer
+    private fun printCurrentField() {
+        println("x: ${this.currentField.getX()}, y: ${this.currentField.getY()}")
+        this.currentField.printCells()
     }
 
-    fun printField(x: Int, y: Int) {
-        this.fields[x][y].printCells()
-    }
-
-    fun printAllFields() {
+    private fun printAllFields() {
         for (fstIndex in 0 until this.sizeOfField) {
             for (sndIndex in 0 until this.sizeOfField) {
                 for (trdIndex in 0 until this.sizeOfField) {
@@ -49,12 +57,63 @@ class Game {
     }
 
     private fun switchField(x: Int, y: Int) {
-        this.currentField = this.fields[y][x]
+        if (x < this.sizeOfField && y < this.sizeOfField) {
+            this.currentField = this.fields[y][x]
+            return
+        }
+        throw GameException("X and Y must be less than the size of the field")
     }
 
-    fun makeMove(x: Int, y: Int) {
+    private fun checkWin() {
+        if(this.currentField.isWin(this.currentPlayer)) this.gameOver = this.currentField.isWin(this.currentPlayer)
+    }
+
+    private fun makeMove(x: Int, y: Int) {
         this.markCell(x, y)
+        this.checkWin()
         this.switchPlayer()
         this.switchField(x, y)
+    }
+
+
+    private fun restart() {
+        this.currentPlayer = Value.X
+        this.gameOver = false
+        this.currentField = this.fields[0][0]
+        this.fields.forEach { row -> row.forEach { field -> field.restart() } }
+    }
+
+    // Лучше конечно вынести обработчик для консоли в отдельный класс, но мне было честно сказать лень
+    private fun startLoop() {
+        val scanner = Scanner(System.`in`)
+        println("Game started!")
+        while(!this.gameOver) {
+            println("Enter one of the commands for actions. Available actions - print all map, print current field, make move:")
+            val input = scanner.nextLine()
+            val command = commands[input]
+            if (command != null) {
+                if (command == Command.PRINT_ALL_FIELDS) this.printAllFields()
+                if (command == Command.PRINT_CURRENT_FIELD) this.printCurrentField()
+                if (command == Command.MAKE_MOVE) {
+                    println("Current field:")
+                    this.printCurrentField()
+                    println("Input x and y:")
+                    val (x, y) = arrayOf(scanner.nextInt(), scanner.nextInt())
+                    try {
+                        this.makeMove(x, y)
+                    } catch (e: FieldException) {
+                        println(e.message)
+                    }
+                }
+                continue
+            }
+            println("Unknown command")
+        }
+        println("Congratulations ${this.currentPlayer} won!")
+    }
+
+    fun start() {
+        this.startLoop()
+        this.restart()
     }
 }
