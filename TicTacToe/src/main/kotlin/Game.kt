@@ -119,7 +119,7 @@ class Game {
                         val (x, y) = input.toString().split(" ").map { it.toInt() }
                         this.makeMove(x, y)
                     } catch (e: Exception) {
-                        if(e is FieldException) println(e.message) else println("Unknown command")
+                        if(e is FieldException || e is GameException) println(e.message) else println("Unknown command")
                     }
                 }
                 continue
