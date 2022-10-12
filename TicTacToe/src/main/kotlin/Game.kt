@@ -2,6 +2,7 @@ import java.lang.Exception
 import kotlin.math.roundToInt
 
 class Settings(var sizeOfField: Int = 3)
+
 class GameException(message: String) : Exception(message)
 
 val defaultSettings = Settings(3)
