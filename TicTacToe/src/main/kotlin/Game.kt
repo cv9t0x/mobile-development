@@ -5,18 +5,18 @@ class Settings(var sizeOfField: Int = 3)
 
 class GameException(message: String) : Exception(message)
 
-val defaultSettings = Settings(3)
-
 enum class Command {
     PRINT_ALL_FIELDS, PRINT_CURRENT_FIELD, MAKE_MOVE, RETURN
 }
 
 val commands = mapOf(
-    "print all map" to Command.PRINT_ALL_FIELDS,
+    "print all fields" to Command.PRINT_ALL_FIELDS,
     "print current field" to Command.PRINT_CURRENT_FIELD,
     "make move" to Command.MAKE_MOVE,
     "return" to Command.RETURN
 )
+
+val defaultSettings = Settings(3)
 
 class Game {
     private var currentPlayer = Value.X
@@ -95,7 +95,8 @@ class Game {
     private fun restart() {
         this.currentPlayer = Value.X
         this.gameOver = false
-        this.currentField = this.fields[0][0]
+        val center = (this.sizeOfField / 2).toDouble().roundToInt()
+        this.currentField = this.fields[center][center]
         this.fields.forEach { row -> row.forEach { field -> field.restart() } }
     }
 
@@ -103,7 +104,7 @@ class Game {
     private fun startLoop() {
         println("Game started!")
         while (!this.gameOver) {
-            println("Enter one of the commands for actions. Available actions - print all map, print current field, make move:")
+            println("Enter one of the commands for actions. Available actions - ${commands.keys.filter { commands[it] != Command.RETURN }.joinToString(", ")}:")
             var input = readLine().toString()
             var command = commands[input]
             if (command != null) {
