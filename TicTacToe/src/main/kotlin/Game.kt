@@ -1,15 +1,21 @@
 import java.lang.Exception
-import java.util.Scanner
+import kotlin.math.roundToInt
+
 class Settings(var sizeOfField: Int = 3)
 class GameException(message: String) : Exception(message)
 
 val defaultSettings = Settings(3)
 
 enum class Command {
-    PRINT_ALL_FIELDS, PRINT_CURRENT_FIELD, MAKE_MOVE
+    PRINT_ALL_FIELDS, PRINT_CURRENT_FIELD, MAKE_MOVE, RETURN
 }
 
-val commands = mapOf("print all map" to Command.PRINT_ALL_FIELDS, "print current field" to Command.PRINT_CURRENT_FIELD, "make move" to Command.MAKE_MOVE)
+val commands = mapOf(
+    "print all map" to Command.PRINT_ALL_FIELDS,
+    "print current field" to Command.PRINT_CURRENT_FIELD,
+    "make move" to Command.MAKE_MOVE,
+    "return" to Command.RETURN
+)
 
 class Game {
     private var currentPlayer = Value.X
@@ -22,8 +28,17 @@ class Game {
     constructor(settings: Settings = defaultSettings) {
         this.sizeOfField = settings.sizeOfField
         this.fields =
-            Array<Array<Field>>(this.sizeOfField) { y -> Array(this.sizeOfField) { x -> Field(x, y, this.sizeOfField) } }
-        this.currentField = this.fields[0][0]
+            Array<Array<Field>>(this.sizeOfField) { y ->
+                Array(this.sizeOfField) { x ->
+                    Field(
+                        x,
+                        y,
+                        this.sizeOfField
+                    )
+                }
+            }
+        val center = (this.sizeOfField / 2).toDouble().roundToInt()
+        this.currentField = this.fields[center][center]
     }
 
     private fun printCurrentField() {
@@ -65,7 +80,7 @@ class Game {
     }
 
     private fun checkWin() {
-        if(this.currentField.isWin(this.currentPlayer)) this.gameOver = this.currentField.isWin(this.currentPlayer)
+        if (this.currentField.isWin(this.currentPlayer)) this.gameOver = this.currentField.isWin(this.currentPlayer)
     }
 
     private fun makeMove(x: Int, y: Int) {
@@ -85,24 +100,26 @@ class Game {
 
     // Лучше конечно вынести обработчик для консоли в отдельный класс, но мне было честно сказать лень
     private fun startLoop() {
-        val scanner = Scanner(System.`in`)
         println("Game started!")
-        while(!this.gameOver) {
+        while (!this.gameOver) {
             println("Enter one of the commands for actions. Available actions - print all map, print current field, make move:")
-            val input = scanner.nextLine()
-            val command = commands[input]
+            var input = readLine().toString()
+            var command = commands[input]
             if (command != null) {
                 if (command == Command.PRINT_ALL_FIELDS) this.printAllFields()
                 if (command == Command.PRINT_CURRENT_FIELD) this.printCurrentField()
                 if (command == Command.MAKE_MOVE) {
                     println("Current field:")
                     this.printCurrentField()
-                    println("Input x and y:")
-                    val (x, y) = arrayOf(scanner.nextInt(), scanner.nextInt())
+                    println("Input x and y or enter return to go back to the menu:")
+                    input = readLine().toString()
+                    var command = commands[input]
+                    if(command == Command.RETURN) continue
                     try {
+                        val (x, y) = input.toString().split(" ").map { it.toInt() }
                         this.makeMove(x, y)
-                    } catch (e: FieldException) {
-                        println(e.message)
+                    } catch (e: Exception) {
+                        if(e is FieldException) println(e.message) else println("Unknown command")
                     }
                 }
                 continue

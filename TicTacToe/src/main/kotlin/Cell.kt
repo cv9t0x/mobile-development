@@ -1,4 +1,4 @@
-enum class Value() {
+enum class Value {
     X, O
 }
 
@@ -21,7 +21,6 @@ class Cell {
     fun isEmpty(): Boolean {
         return this.value == null
     }
-
 
     override fun toString(): String {
         return if (this.value == null) "-" else this.value.toString()
