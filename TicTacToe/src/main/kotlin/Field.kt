@@ -32,7 +32,7 @@ class Field {
     fun printCells() {
         this.cells.forEachIndexed { rowIndex, row ->
             row.forEach { cell ->
-                print(cell)
+                cell.print()
                 print("\t")
             }
             if (rowIndex !== this.size) println()
@@ -42,7 +42,7 @@ class Field {
     fun markCell(x: Int, y: Int, value: Value) {
         if (x < this.size && y < this.size) {
             val cell = this.cells[x][y]
-            if(cell.isEmpty()) {
+            if (cell.isEmpty()) {
                 cell.setValue(value)
                 return
             }
