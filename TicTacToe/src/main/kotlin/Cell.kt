@@ -2,7 +2,6 @@ enum class Value {
     X, O
 }
 
-
 class Cell {
     private var value: Value? = null
 
@@ -22,7 +21,11 @@ class Cell {
         return this.value == null
     }
 
-    override fun toString(): String {
-        return if (this.value == null) "-" else this.value.toString()
+    fun print(isCurrent: Boolean = false) {
+        if (this.value == null) {
+            if (isCurrent) print("*") else print("-")
+            return
+        }
+        print(this.value.toString())
     }
 }
