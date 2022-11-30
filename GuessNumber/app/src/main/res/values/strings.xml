@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GuessNumber</string>
+    <string name="start_range_placeholder">Введите начало диапозона</string>
+    <string name="end_range_placeholder">Введите конец диапозона</string>
+    <string name="start">Начать</string>
+    <string name="more">Больше</string>
+    <string name="less">Меньше</string>
+    <string name="home">Вернуться</string>
+</resources>
