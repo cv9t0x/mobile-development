@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">ArrayAdapter</string>
+    <string name="create_user">Создать нового user\'а</string>
+    <string-array name="names">
+        <item>Name1</item>
+        <item>Name2</item>
+        <item>Name3</item>
+        <item>Name4</item>
+        <item>Name5</item>
+    </string-array>
+    <string-array name="surnames">
+        <item>Surname1</item>
+        <item>Surname2</item>
+        <item>Surname3</item>
+        <item>Surname4</item>
+        <item>Surname5</item>
+    </string-array>
+</resources>
