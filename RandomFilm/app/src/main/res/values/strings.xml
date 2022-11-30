@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">RandomFilm</string>
+    <string name="next">Следующий фильм</string>
+    <string name="reset">Сбросить</string>
+    <string-array name="movies">
+        <item>Film 1</item>
+        <item>Film 2</item>
+        <item>Film 3</item>
+        <item>Film 4</item>
+        <item>Film 5</item>
+    </string-array>
+</resources>

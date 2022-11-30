@@ -1,4 +1,5 @@
 import java.io.File
+import java.util.Scanner
 
 data class Message(val address: String?, val topic: String?, val message: String?, val htmlFile: File) {
     fun toHTML() {
@@ -48,4 +49,7 @@ fun main() {
     val f = File("index.html")
     val m = Message("test@test.com", "Test", "Test", f)
     println(m.toHTML())
+
+    var a: Int = readLine().toString().toInt()
+
 }
