@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">AviaService</string>
+    <string name="dep_airport">Аэропорт отправления</string>
+    <string name="arr_airport">Аэропорт прибытия</string>
+    <string name="dep_date">Дата вылета</string>
+    <string name="arr_data">Дата прилета</string>
+    <string name="adults">Взрослые</string>
+    <string name="children">Дети</string>
+    <string name="babies">Младенцы</string>
+    <string name="search">Поиск</string>
+    <string-array name="airports">
+        <item>Аэропорт 1</item>
+        <item>Аэропорт 2</item>
+        <item>Аэропорт 3</item>
+        <item>Аэропорт 4</item>
+        <item>Аэропорт 5</item>
+    </string-array>
+</resources>
