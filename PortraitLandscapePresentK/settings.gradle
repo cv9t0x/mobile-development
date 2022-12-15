@@ -1,0 +1,2 @@
+rootProject.name = "PortraitLandscapePresentK"
+include ':app'
