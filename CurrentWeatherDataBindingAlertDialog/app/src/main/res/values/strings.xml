@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">CurrentWeatherDataBinding</string>
+    <string name="API_KEY">7f379581bcfb1fd5d2bc8a52a8244231</string>
+    <string name="simple_weather_app">Simple Weather App</string>
+    <string name="search_for_a_city">Search for a city</string>
+    <string name="submit">submit</string>
+    <string name="none">none</string>
+    <string name="back">Back</string>
+    <string name="temp">Temp</string>
+    <string name="feels_like">Feels like</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind_speed">Wind speed</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_weather">Weather</string>
+    <string name="simple_weather">Simple Weather</string>
+    <string name="detailed_weather">Detailed Weather</string>
+</resources>
