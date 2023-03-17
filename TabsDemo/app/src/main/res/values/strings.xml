@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">TabsDemo</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string-array name="cities">
+        <item>Иркутск</item>
+        <item>Москва</item>
+        <item>Воронеж</item>
+    </string-array>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="API_KEY">7f379581bcfb1fd5d2bc8a52a8244231</string>
+    <string name="temp">Температура:</string>
+    <string name="feels_like">Ощущается как:</string>
+    <string name="humidity">Влажность:</string>
+    <string name="wind_speed">Скорость ветра:</string>
+</resources>

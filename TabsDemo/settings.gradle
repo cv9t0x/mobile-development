@@ -1,0 +1,2 @@
+rootProject.name = "TabsDemo"
+include ':app'
