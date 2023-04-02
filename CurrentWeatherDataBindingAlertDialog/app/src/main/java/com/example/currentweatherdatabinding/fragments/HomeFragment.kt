@@ -10,8 +10,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.currentweatherdatabinding.R
 import com.example.currentweatherdatabinding.adapters.WeatherAdapter.WeatherAdapter
 import com.example.currentweatherdatabinding.databinding.FragmentHomeBinding
-import com.example.currentweatherdatabinding.dialogs.AlertDialog.WeatherDisplayDialog
-import com.example.currentweatherdatabinding.dialogs.AlertDialog.WeatherDisplayDialogMode
+import com.example.currentweatherdatabinding.dialogs.WeatherDisplayDialog
+import com.example.currentweatherdatabinding.dialogs.WeatherDisplayDialogMode
 import com.example.currentweatherdatabinding.models.WeatherForecast
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_for_a_city">Поиск города</string>
+    <string name="submit">Отправить</string>
+    <string name="none">ничего</string>
+    <string name="back">назад</string>
+    <string name="temp">Температура</string>
+    <string name="feels_like">Ощущается как</string>
+    <string name="humidity">Влажность</string>
+    <string name="wind_speed">Скорость ветра</string>
+
+    <string name="alert_dialog_title">Выберите вид отображения погоды:</string>
+    <string name="accept">Принять</string>
+    <string name="cancel">Отменить</string>
+
+    <string name="en">Английский</string>
+    <string name="ru">Русский</string>
+</resources>

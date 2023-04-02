@@ -1,14 +1,20 @@
-package com.example.currentweatherdatabinding.dialogs.AlertDialog
+package com.example.currentweatherdatabinding.dialogs
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import android.app.AlertDialog
+import com.example.currentweatherdatabinding.App
+import com.example.currentweatherdatabinding.R
 
-enum class WeatherDisplayDialogMode(val mode: String) {
-    DETAILED("Detailed"),
-    SIMPLE("Simple")
+enum class WeatherDisplayDialogMode(private val nameId: Int) {
+    DETAILED(R.string.detailed_weather),
+    SIMPLE(R.string.simple_weather);
+
+    override fun toString(): String {
+        return App.context?.resources?.getString(nameId) ?: "";
+    }
 }
 
 class WeatherDisplayDialog(private val ctx: Context, private val onAccept: (choice: WeatherDisplayDialogMode) -> Unit) : DialogFragment() {
@@ -21,18 +27,18 @@ class WeatherDisplayDialog(private val ctx: Context, private val onAccept: (choi
         return ctx.let { it ->
             AlertDialog
                 .Builder(it)
-                .setTitle("Choose weather display mode:")
+                .setTitle(R.string.alert_dialog_title)
                 .setSingleChoiceItems(
-                    (choices.map { it.mode }).toTypedArray(),
+                    (choices.map { it.toString() }).toTypedArray(),
                     choice
                 ) { _, which ->
                     choice = which
                 }
-                .setPositiveButton("Accept") { _, _ ->
+                .setPositiveButton(R.string.accept) { _, _ ->
                     displayMode = choices[choice]
                     onAccept(displayMode!!)
                 }
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton(R.string.cancel, null)
                 .create()
         }
     }
