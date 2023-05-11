@@ -1,6 +1,7 @@
 import android.content.Context
 import android.media.MediaPlayer
-import com.example.musicplayer.MediaPlayerObserver
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import java.io.IOException
 
 class MediaPlayerSingleton private constructor(context: Context) {
@@ -8,25 +9,21 @@ class MediaPlayerSingleton private constructor(context: Context) {
     companion object {
         @Volatile
         private var instance: MediaPlayerSingleton? = null
-        private val observers = mutableListOf<MediaPlayerObserver>()
 
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
                 instance ?: MediaPlayerSingleton(context).also { instance = it }
             }
-
-        fun addObserver(observer: MediaPlayerObserver) {
-            observers.add(observer)
-        }
-
-        fun removeObserver(observer: MediaPlayerObserver) {
-            observers.remove(observer)
-        }
     }
 
     private val mediaPlayer: MediaPlayer = MediaPlayer()
+    private var _isPlaying = MutableLiveData<Boolean>()
+
+    val isPlaying: LiveData<Boolean>
+        get() = _isPlaying
 
     init {
+        _isPlaying.value = false
         try {
             val assetFileDescriptor = context.assets.openFd("file.mp3")
             mediaPlayer.setDataSource(
@@ -37,7 +34,7 @@ class MediaPlayerSingleton private constructor(context: Context) {
             assetFileDescriptor.close()
             mediaPlayer.prepare()
             mediaPlayer.setOnCompletionListener {
-                notifyObservers()
+                _isPlaying.postValue(false)
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -46,20 +43,15 @@ class MediaPlayerSingleton private constructor(context: Context) {
 
     fun play() {
         mediaPlayer.start()
+        _isPlaying.value = true
     }
 
     fun pause() {
         mediaPlayer.pause()
+        _isPlaying.value = false
     }
-    fun isPlaying() = mediaPlayer.isPlaying
 
     fun getCurrentPosition() = mediaPlayer.currentPosition
 
     fun getDuration() = mediaPlayer.duration
-
-    private fun notifyObservers() {
-        for (observer in observers) {
-            observer.onPlaybackComplete()
-        }
-    }
 }

@@ -5,13 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 
-class ProgressBarActivity : AppCompatActivity(), MediaPlayerObserver {
+class ProgressBarActivity : AppCompatActivity() {
 
     private lateinit var mediaPlayer: MediaPlayerSingleton
     private lateinit var playPauseButton: Button
@@ -24,8 +24,6 @@ class ProgressBarActivity : AppCompatActivity(), MediaPlayerObserver {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_progress_bar)
 
-        MediaPlayerSingleton.addObserver(this)
-
         mediaPlayer = MediaPlayerSingleton.getInstance(this)
         playPauseButton = findViewById(R.id.playPauseButton)
         mainActivityButton = findViewById(R.id.mainActivityButton)
@@ -37,15 +35,14 @@ class ProgressBarActivity : AppCompatActivity(), MediaPlayerObserver {
     }
 
     private fun initView() {
-        playPauseButton.text = if (mediaPlayer.isPlaying()) "Pause" else "Play"
+        mediaPlayer.isPlaying.observe(this, Observer { isPlaying ->
+            playPauseButton.text = if (isPlaying) "Pause" else "Play"
+
+        })
+
         playPauseButton.setOnClickListener {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.pause()
-                playPauseButton.text = "Play"
-            } else {
-                mediaPlayer.play()
-                playPauseButton.text = "Pause"
-            }
+            if (mediaPlayer.isPlaying.value == true)  mediaPlayer.pause()
+            else mediaPlayer.play()
         }
 
         mainActivityButton.setOnClickListener {
@@ -73,13 +70,8 @@ class ProgressBarActivity : AppCompatActivity(), MediaPlayerObserver {
         return String.format("%02d:%02d", minutes, seconds)
     }
 
-    override fun onPlaybackComplete() {
-        playPauseButton.text = "Play"
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        MediaPlayerSingleton.removeObserver(this)
         handler.removeCallbacks(updateProgressRunnable)
     }
 }
