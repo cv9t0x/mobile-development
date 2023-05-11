@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MusicPlayer</string>
+    <string name="play">play</string>
+    <string name="progress">Progress bar activity</string>
+    <string name="main">Main activity</string>
+</resources>
