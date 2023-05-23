@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/card_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ID: 30" />
+
+    <TextView
+        android:id="@+id/card_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Count: 2" />
+
+    <TextView
+        android:id="@+id/card_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Color: 1" />
+
+    <TextView
+        android:id="@+id/card_shape"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Shape: 2" />
+
+    <TextView
+        android:id="@+id/card_fill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fill: 1" />
+
+</LinearLayout>
